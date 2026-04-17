@@ -6,7 +6,7 @@ services:
     hostname: "${STACK_PREFIX:-gallery1}-ts"
     environment:
       - TS_AUTHKEY=${TAILSCALE_AUTHKEY}
-      - TS_EXTRA_ARGS=${TS_EXTRA_ARGS:---advertise-tags=tag:container --reset}
+      - TS_EXTRA_ARGS=${TS_EXTRA_ARGS:--reset}
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_USERSPACE=${TS_USERSPACE:-false}
     volumes:
