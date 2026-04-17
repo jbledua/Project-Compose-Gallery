@@ -30,8 +30,15 @@ services:
       - immich-machine-learning
       - immich-ts
     network_mode: "service:immich-ts"
-    env_file:
-      - .env
+    environment:
+      - TZ=${TIMEZONE:-Etc/UTC}
+      - DB_HOSTNAME=database
+      - DB_PORT=5432
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE_NAME=${DB_DATABASE_NAME}
+      - REDIS_HOSTNAME=redis
+      - REDIS_PORT=6379
     volumes:
       - ${UPLOAD_LOCATION}:/data
       - /etc/localtime:/etc/localtime:ro
@@ -40,8 +47,15 @@ services:
   immich-machine-learning:
     container_name: "${STACK_PREFIX:-gallery1}-ml"
     image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
-    env_file:
-      - .env
+    environment:
+      - TZ=${TIMEZONE:-Etc/UTC}
+      - DB_HOSTNAME=database
+      - DB_PORT=5432
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE_NAME=${DB_DATABASE_NAME}
+      - REDIS_HOSTNAME=redis
+      - REDIS_PORT=6379
     volumes:
       - ${MODEL_CACHE_LOCATION}:/cache
     restart: unless-stopped
